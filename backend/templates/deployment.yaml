@@ -36,7 +36,7 @@ spec:
 
           envFrom:
             - secretRef:
-                name: {{ .Values.externalSecret.targetName }}
+                name: {{ .Values.externalSecret.secretName }}
 
           volumeMounts:
             - name: init-sql
@@ -66,7 +66,7 @@ spec:
 
             {{- if .Values.externalSecret.enabled }}
             - secretRef:
-                name: {{ .Values.externalSecret.targetName }}
+                name: {{ .Values.externalSecret.secretName }}
             {{- end }}
 
           volumeMounts:

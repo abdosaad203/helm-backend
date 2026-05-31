@@ -23,13 +23,10 @@ externalSecret:
   enabled: true
   secretName: identity-api-secret
   data:
-    DB_HOST: ecommerce-db-host
-    DB_NAME: ecommerce-db-name
-    DB_USER: ecommerce-db-user
-    DB_PASS: ecommerce-db-pass
+    ConnectionStrings__Default: ecommerce-db-connection
 
 migration:
-  enabled: true
+  enabled: false
 
 schemaSql: |
   CREATE DATABASE IF NOT EXISTS ecommerce;
