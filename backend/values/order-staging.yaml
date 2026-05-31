@@ -1,0 +1,32 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/abdosaad203/order-api
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+
+pvc:
+  enabled: true
+  storageClass: gp2
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /app/logs
+
+config:
+  ASPNETCORE_ENVIRONMENT: Staging
+
+externalSecret:
+  enabled: true
+  secretName: order-api-secret
+  data:
+    DB_HOST: ecommerce-db-host
+    DB_NAME: ecommerce-db-name
+    DB_USER: ecommerce-db-user
+    DB_PASS: ecommerce-db-pass
+
+migration:
+  enabled: false

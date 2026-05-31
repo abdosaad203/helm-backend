@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+pvc:
+  enabled: true
+  storageClass: gp2
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /app/logs
+
+config:
+  enabled: true
+  data: {}
+
+externalSecret:
+  enabled: false
+  secretStore: aws-secretsmanager
+  secretName: backend-secret
+  data: {}
+
+migration:
+  enabled: false
+  sql: ""
+
+env:
+  ASPNETCORE_ENVIRONMENT: Staging

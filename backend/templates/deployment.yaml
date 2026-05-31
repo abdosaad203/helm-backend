@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "backend.fullname" . }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: {{ include "backend.name" . }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ include "backend.name" . }}
+
+    spec:
+
+      {{- if .Values.migration.enabled }}
+      initContainers:
+        - name: db-migrate
+          image: mysql:8.0
+
+          command:
+            - sh
+            - -c
+            - |
+              until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1"; do
+                echo "Waiting for MySQL..."
+                sleep 3
+              done
+
+              mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" < /docker-entrypoint-initdb.d/01-schema.sql
+
+          envFrom:
+            - secretRef:
+                name: {{ .Values.externalSecret.targetName }}
+
+          volumeMounts:
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+      {{- end }}
+
+      containers:
+        - name: backend
+
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{ .Values.env.ASPNETCORE_ENVIRONMENT }}"
+
+          envFrom:
+            {{- if .Values.config.enabled }}
+            - configMapRef:
+                name: {{ include "backend.fullname" . }}-config
+            {{- end }}
+
+            {{- if .Values.externalSecret.enabled }}
+            - secretRef:
+                name: {{ .Values.externalSecret.targetName }}
+            {{- end }}
+
+          volumeMounts:
+            {{- if .Values.pvc.enabled }}
+            - name: logs
+              mountPath: {{ .Values.pvc.mountPath }}
+            {{- end }}
+
+      volumes:
+
+        {{- if .Values.pvc.enabled }}
+        - name: logs
+          persistentVolumeClaim:
+            claimName: {{ include "backend.fullname" . }}-pvc
+        {{- end }}
+
+        {{- if .Values.migration.enabled }}
+        - name: init-sql
+          configMap:
+            name: db-init-sql
+        {{- end }}

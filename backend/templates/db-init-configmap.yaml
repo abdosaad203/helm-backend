@@ -1,0 +1,13 @@
+{{- if .Values.migration.enabled }}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: db-init-sql
+
+data:
+  01-schema.sql: |
+{{ .Values.migration.sql | indent 4 }}
+
+{{- end }}
