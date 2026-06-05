@@ -21,7 +21,7 @@ config:
 
 externalSecret:
   enabled: true
-  secretName: catalog-api-secret
+  secretName: catalog-api-stg-secret
   data:
     DB_HOST: ecommerce-db-host
     DB_NAME: ecommerce-db-name

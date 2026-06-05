@@ -21,7 +21,7 @@ config:
 
 externalSecret:
   enabled: true
-  secretName: identity-api-secret
+  secretName: identity-api-stg-secret
   data:
     ConnectionStrings__Default: ecommerce-db-connection
 
