@@ -26,6 +26,10 @@ externalSecret:
   data:
     ConnectionStrings__Default: ecommerce-db-connection
 
+    Jwt__Key: ecommerce-jwt-key
+    Jwt__Issuer: ecommerce-jwt-issuer
+    Jwt__Audience: ecommerce-jwt-audience
+
 migration:
   enabled: false
 

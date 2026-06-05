@@ -1,0 +1,127 @@
+---
+# Source: backend/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: test-backend-config
+
+data:
+---
+# Source: backend/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: test-backend-pvc
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  storageClassName: gp2
+
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: backend/templates/service.yaml
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: test-backend
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: test
+
+  ports:
+    - port: 8081
+      targetPort: 8081
+---
+# Source: backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: test-backend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/instance: test
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/instance: test
+
+    spec:
+
+      containers:
+        - name: backend
+
+          image: "ghcr.io/abdosaad203/catalog-api:latest"
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8081
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Staging"
+
+          envFrom:
+            - configMapRef:
+                name: test-backend-config
+            - secretRef:
+                name: catalog-api-stg-secret
+
+          volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: test-backend-pvc
+---
+# Source: backend/templates/externalsecret.yaml
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+
+metadata:
+  name: test-backend
+
+spec:
+  refreshInterval: 1h
+
+  secretStoreRef:
+    name: aws-secretsmanager
+    kind: ClusterSecretStore
+
+  target:
+    name: catalog-api-stg-secret
+
+  data:
+    - secretKey: DB_HOST
+      remoteRef:
+        key: ecommerce-db-host
+    - secretKey: DB_NAME
+      remoteRef:
+        key: ecommerce-db-name
+    - secretKey: DB_PASS
+      remoteRef:
+        key: ecommerce-db-pass
+    - secretKey: DB_USER
+      remoteRef:
+        key: ecommerce-db-user
