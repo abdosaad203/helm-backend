@@ -29,9 +29,9 @@ externalSecret:
     DB_USER: ecommerce-db-user
     DB_PASS: ecommerce-db-pass
 
-    JWT_KEY: jwt-key
-    JWT_ISSUER: jwt-issuer
-    JWT_AUDIENCE: jwt-audience
+    JWT_KEY: ecommerce-jwt-key
+    JWT_ISSUER: ecommerce-jwt-issuer
+    JWT_AUDIENCE: ecommerce-jwt-audience
 
 migration:
   enabled: false
