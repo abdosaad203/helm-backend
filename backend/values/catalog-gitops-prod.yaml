@@ -17,7 +17,7 @@ pvc:
   size: 2Gi
   mountPath: /app/logs
 
-config:
+env:
   ASPNETCORE_ENVIRONMENT: Production
 
 externalSecret:
