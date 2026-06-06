@@ -8,6 +8,6 @@ metadata:
 
 data:
   01-schema.sql: |
-{{ .Values.migration.sql | indent 4 }}
+{{ .Files.Get "files/01-schema.sql" | indent 4 }}
 
 {{- end }}
