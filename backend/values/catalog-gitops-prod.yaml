@@ -33,5 +33,7 @@ externalSecret:
     Jwt__Issuer: ecommerce-jwt-issuer
     Jwt__Audience: ecommerce-jwt-audience
 
+    ConnectionStrings__Default: ecommerce-db-connection
+
 migration:
   enabled: false
