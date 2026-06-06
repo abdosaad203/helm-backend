@@ -24,6 +24,8 @@ externalSecret:
   enabled: true
   secretName: identity-api-secret
   data:
+    ConnectionStrings__Default: ecommerce-db-connection
+
     DB_HOST: ecommerce-db-host
     DB_NAME: ecommerce-db-name
     DB_USER: ecommerce-db-user
