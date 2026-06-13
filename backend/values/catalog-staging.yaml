@@ -17,16 +17,19 @@ pvc:
   mountPath: /app/logs
 
 config:
-  ASPNETCORE_ENVIRONMENT: Staging
+  enabled: true
+  data:
+    ASPNETCORE_ENVIRONMENT: Staging
 
 externalSecret:
   enabled: true
   secretName: catalog-api-secret
   data:
-    DB_HOST: ecommerce-db-host
-    DB_NAME: ecommerce-db-name
-    DB_USER: ecommerce-db-user
-    DB_PASS: ecommerce-db-pass
+    ConnectionStrings__Default: ecommerce-db-connection
+
+    Jwt__Key: ecommerce-jwt-key
+    Jwt__Issuer: ecommerce-jwt-issuer
+    Jwt__Audience: ecommerce-jwt-audience
 
 migration:
   enabled: false

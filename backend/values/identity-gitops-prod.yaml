@@ -37,6 +37,3 @@ externalSecret:
 
 migration:
   enabled: true
-
-schemaSql: |
-  CREATE DATABASE IF NOT EXISTS ecommerce;

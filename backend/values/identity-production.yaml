@@ -17,12 +17,20 @@ pvc:
   mountPath: /app/logs
 
 config:
-  ASPNETCORE_ENVIRONMENT: Production
+  enabled: true
+  data:
+    ASPNETCORE_ENVIRONMENT: Production
 
 externalSecret:
   enabled: true
   secretName: identity-api-secret
   data:
+    ConnectionStrings__Default: ecommerce-db-connection
+
+    Jwt__Key: ecommerce-jwt-key
+    Jwt__Issuer: ecommerce-jwt-issuer
+    Jwt__Audience: ecommerce-jwt-audience
+
     DB_HOST: ecommerce-db-host
     DB_NAME: ecommerce-db-name
     DB_USER: ecommerce-db-user
@@ -30,6 +38,3 @@ externalSecret:
 
 migration:
   enabled: true
-
-schemaSql: |
-  CREATE DATABASE IF NOT EXISTS ecommerce;

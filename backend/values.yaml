@@ -29,7 +29,6 @@ externalSecret:
 
 migration:
   enabled: false
-  sql: ""
 
 env:
   ASPNETCORE_ENVIRONMENT: Staging
