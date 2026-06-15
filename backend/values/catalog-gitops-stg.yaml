@@ -29,6 +29,8 @@ externalSecret:
     DB_USER: staging-db-user
     DB_PASS: staging-db-pass
 
+    ConnectionStrings__Default: staging-db-connection
+
     Jwt__Key: ecommerce-jwt-key
     Jwt__Issuer: ecommerce-jwt-issuer
     Jwt__Audience: ecommerce-jwt-audience
