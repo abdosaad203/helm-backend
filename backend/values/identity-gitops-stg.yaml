@@ -24,7 +24,7 @@ externalSecret:
   enabled: true
   secretName: identity-api-stg-secret
   data:
-    ConnectionStrings__Default: ecommerce-db-connection
+    ConnectionStrings__Default: staging-db-connection
 
     Jwt__Key: ecommerce-jwt-key
     Jwt__Issuer: ecommerce-jwt-issuer

@@ -24,10 +24,10 @@ externalSecret:
   enabled: true
   secretName: order-api-stg-secret
   data:
-    DB_HOST: ecommerce-db-host
-    DB_NAME: ecommerce-db-name
-    DB_USER: ecommerce-db-user
-    DB_PASS: ecommerce-db-pass
+    DB_HOST: staging-db-host
+    DB_NAME: staging-db-name
+    DB_USER: staging-db-user
+    DB_PASS: staging-db-pass
 
     Jwt__Key: ecommerce-jwt-key
     Jwt__Issuer: ecommerce-jwt-issuer
