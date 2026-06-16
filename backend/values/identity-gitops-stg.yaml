@@ -31,4 +31,4 @@ externalSecret:
     Jwt__Audience: ecommerce-jwt-audience
 
 migration:
-  enabled: false
+  enabled: true
