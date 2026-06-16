@@ -22,14 +22,15 @@ config:
 
 externalSecret:
   enabled: true
-  secretName: identity-api-secret
-  data:
-    ConnectionStrings__Default: ecommerce-db-connection
+  secretName: identity-api-prod-secret
 
-    DB_HOST: ecommerce-db-host
-    DB_NAME: ecommerce-db-name
-    DB_USER: ecommerce-db-user
-    DB_PASS: ecommerce-db-pass
+  data:
+    DB_HOST: Production-db-host
+    DB_NAME: Production-db-name
+    DB_USER: Production-db-user
+    DB_PASS: Production-db-pass
+
+    ConnectionStrings__Default: Production-db-connection
 
     Jwt__Key: ecommerce-jwt-key
     Jwt__Issuer: ecommerce-jwt-issuer

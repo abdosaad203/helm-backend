@@ -23,7 +23,13 @@ config:
 externalSecret:
   enabled: true
   secretName: identity-api-stg-secret
+
   data:
+    DB_HOST: staging-db-host
+    DB_NAME: staging-db-name
+    DB_USER: staging-db-user
+    DB_PASS: staging-db-pass
+
     ConnectionStrings__Default: staging-db-connection
 
     Jwt__Key: ecommerce-jwt-key
